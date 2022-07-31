@@ -1,30 +1,17 @@
-require("dotenv").config();
-
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
-// const { default: fetch } = require("node-fetch");
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
-const jwt = require("jsonwebtoken");
-
-const PORT = process.env.PORT || 5000;
+const express = require('express');
+const http = require('http');
 const app = express();
+const server = http.createServer(app);
+const socket = require("socket.io")
+const io = socket(server);
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
 
-//
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
+io.on("connection", (socket) => {
+    socket.emit("me", socket.id)
 
-//
+    socket.on("disconnet", () => {
 
-//
-app.listen(PORT, () => {
-    console.log(`API server listening at http://localhost:${PORT}`);
-});
+    })
+})
+server.listen(PORT, () => console.log("listening server", PORT))
