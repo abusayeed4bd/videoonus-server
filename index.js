@@ -5,7 +5,7 @@ const server = http.createServer(app);
 // const socket = require("socket.io")
 const io = require("socket.io")(server, {
     cors: {
-        origin: "https://videoonus.netlify.app/" || "http://localhost:3000",
+        origin: "https://videoonus.netlify.app/",
         methods: ["GET", "POST"]
     }
 })
